@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+
+
+{% block content %}
+
+<section class="section hero is-dark is-fullheight " id="firsthero">
+  <div class="hero-body container level">
+    <div class="field has-addons">
+      <div class="control">
+        <form method="post" action="{% url 'home' %}">
+          {% csrf_token %}
+          <input class="input is-medium" name="q" type="text" placeholder="Type your text here" value="{{ q }}">
+        
+        <div class="select is-medium">
+          <select name="ModelSelection">
+            <option>Vader</option>
+            <option>roBERTa</option>
+          </select>
+        </div>
+        <button class="button is-medium is-info" type="submit">Search</button>
+        </form>
+      </div> 
+      <div class="control"> 
+      
+      <input class="input is-medium" type="text" {% if sentiment_result %} value="{{ sentiment_result }}"{% endif %}  readonly>
+     </div>
+
+    </div>
+    </div>
+   
+</section>
+
+<body>
+</body>
+
+{% endblock %}
