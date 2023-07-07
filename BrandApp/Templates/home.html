@@ -2,35 +2,96 @@
 
 
 {% block content %}
+<style>
+ .section {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      background-color: #27374D;
+    }
 
-<section class="section hero is-dark is-fullheight " id="firsthero">
-  <div class="hero-body container level">
-    <div class="field has-addons">
-      <div class="control">
-        <form method="post" action="{% url 'home' %}">
-          {% csrf_token %}
-          <input class="input is-medium" name="q" type="text" placeholder="Type your text here" value="{{ q }}">
-        
-        <div class="select is-medium">
-          <select name="ModelSelection">
-            <option>Vader</option>
-            <option>roBERTa</option>
-          </select>
-        </div>
-        <button class="button is-medium is-info" type="submit">Search</button>
-        </form>
-      </div> 
-      <div class="control"> 
-      
-      <input class="input is-medium" type="text" {% if sentiment_result %} value="{{ sentiment_result }}"{% endif %}  readonly>
-     </div>
+    .custom-column {
+      padding: 10px;
+      margin-right: 10px;
+      background-color: #526D82;
+      border-radius: 10px;
+    }
 
-    </div>
-    </div>
-   
-</section>
+    .custom-column1 {
+      padding: 10px;
+      margin-right: 10px;
+      background-color: #526D82;
+      border-radius: 10px;
+      width: 76vh;
+    }
 
+    .customfield {
+      padding: 10px;
+      background-color: #9DB2BF;
+      border-radius: 10px;
+    }
+    .submitB{
+      background-color: #DDE6ED;
+    }
+    .ClearB{
+      background-color: #c93e3e;
+    }
+  </style>
+</head>
 <body>
-</body>
+  <section class="section">
+    <div class="container">
+      <div class="columns">
+          <div class="column custom-column1">
+            <div class="field customfield">
+              <label class="label has-text-white">Input</label>
+              <div class="control">
+                <form method="post" action="{% url 'home' %}">
+                  {% csrf_token %}
+                <input class="input is-medium" id="input" name="q" type="text" placeholder="Type your text here" {% if Post %} value="{{Q}}"{% endif %} >
+              </div>
+            </div>
+            <div class="field customfield">
+              <label class="label has-text-white">Select a model</label>
+              <div class="control">
+                <div class="select is-medium">
+                  <select name="ModelSelection">
+                    <option>Select a model</option>
+                    <option>Vader</option>
+                    <option>roBERTa</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+            <div class="field">
+              <div class="buttons is-centered">
+                <button class="button is-medium submitB" type="submit">Search</button>
+                <button class="button is-medium ClearB" onclick="Clear()" type="reset">Clear</button>
+              </form>
+              </div>
+            </div>
+          </div>
+        
+        <div class="column custom-column">
+          <div class="field">
+            <label class="label has-text-white">Output</label>
+            <div class="control">
+              <input class="input is-medium" id="output" type="text" {% if sentiment_result %} value="{{ sentiment_result }}"{% endif %} readonly>
+            
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
 
+
+  <script>
+    function Clear() {
+      document.getElementById('input').value = ''; 
+      document.getElementById('output').value = ''; 
+    }
+  </script>
+</body>
 {% endblock %}
