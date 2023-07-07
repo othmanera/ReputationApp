@@ -38,15 +38,23 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'BrandApp',
-     'social_django',
-
+    'social_django',
     'django.contrib.sites',
+ 
+
+
+    'oauth2_provider',
     'allauth',
     'allauth.account',
     'allauth.socialaccount',
 
     'allauth.socialaccount.providers.facebook',
+
+    
 ]
+
+SITE_ID = 1
+
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -56,6 +64,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'social_django.middleware.SocialAuthExceptionMiddleware',
 ]
 
 ROOT_URLCONF = 'BrandReputation.urls'
@@ -73,6 +82,7 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'social_django.context_processors.backends',
             ],
         },
     },
@@ -134,3 +144,24 @@ STATIC_URL = '/static/'
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+#-------------- Facebook API ------------------
+
+AUTHENTICATION_BACKENDS = [
+    'social_core.backends.facebook.FacebookOAuth2',
+    'django.contrib.auth.backends.ModelBackend',
+]
+LOGIN_URL = 'login'
+LOGIN_REDIRECT_URL = ''
+LOGOUT_URL = 'logout'
+LOGOUT_REDIRECT_URL = 'login'
+SOCIAL_AUTH_FACEBOOK_KEY = "608154021406628"
+SOCIAL_AUTH_FACEBOOK_SECRET = "aa8bda869c0766924528a5ff54fddb76"
+#for extra info
+SOCIAL_AUTH_FACEBOOK_SCOPE = [
+    'email',
+]
+
+SOCIAL_AUTH_URL_NAMESPACE = 'social'
+
+LOGIN_REDIRECT_URL ="/"

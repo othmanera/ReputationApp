@@ -1,6 +1,9 @@
 from django.shortcuts import render
 from vaderSentiment.vaderSentiment import SentimentIntensityAnalyzer
-from transformers import pipeline
+# from transformers import pipeline
+from django.contrib.auth.decorators import login_required
+
+
 
 #VADER sentiment analysis function
 def sentiment_Vader(text):
@@ -43,10 +46,16 @@ def home(request):
         if selected_value== "Vader":
             sentiment_result = sentiment_Vader(q)  # Pass the 'q' value to the sentiment analysis function
         elif  selected_value == "roBERTa":
-            sentiment_classifier = pipeline("sentiment-analysis", model="roberta-base")
-            sentiment_result = sentiment_classifier(q)[0]['label']
-        
+            # sentiment_classifier = pipeline("sentiment-analysis", model="roberta-base")
+            # sentiment_result = sentiment_classifier(q)[0]['label']
+            pass
     return render(request, 'home.html', {'sentiment_result': sentiment_result,  "Radio":selected_value,"Q":q ,"Request":Request})
 
 
+#login page
+def login(request):
+    return render(request, 'login.html')
+@login_required
+def home(request):
+    return render(request, 'home.html')
    
