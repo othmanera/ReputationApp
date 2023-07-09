@@ -39,21 +39,18 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'BrandApp',
     'social_django',
-    'django.contrib.sites',
+    
  
+    # 'allauth',
+    # 'allauth.account',
+    # 'allauth.socialaccount',
 
-
-    'oauth2_provider',
-    'allauth',
-    'allauth.account',
-    'allauth.socialaccount',
-
-    'allauth.socialaccount.providers.facebook',
+    # 'allauth.socialaccount.providers.facebook',
 
     
 ]
 
-SITE_ID = 1
+SITE_ID =1
 
 
 MIDDLEWARE = [
@@ -147,21 +144,32 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 #-------------- Facebook API ------------------
 
-AUTHENTICATION_BACKENDS = [
-    'social_core.backends.facebook.FacebookOAuth2',
-    'django.contrib.auth.backends.ModelBackend',
-]
-LOGIN_URL = 'login'
-LOGIN_REDIRECT_URL = ''
-LOGOUT_URL = 'logout'
-LOGOUT_REDIRECT_URL = 'login'
-SOCIAL_AUTH_FACEBOOK_KEY = "608154021406628"
-SOCIAL_AUTH_FACEBOOK_SECRET = "aa8bda869c0766924528a5ff54fddb76"
-#for extra info
-SOCIAL_AUTH_FACEBOOK_SCOPE = [
-    'email',
-]
+# AUTHENTICATION_BACKENDS = [
+#     # 'social_core.backends.facebook.FacebookOAuth2',
+#     'django.contrib.auth.backends.ModelBackend',
+#     'allauth.account.auth_backends.AuthenticationBackend',
 
-SOCIAL_AUTH_URL_NAMESPACE = 'social'
+# ]
 
-LOGIN_REDIRECT_URL ="/"
+# SOCIALACCOUNT_PROVIDERS = {
+#     'facebook': {
+#         'METHOD': 'oauth2',
+#         'SDK_URL': '//connect.facebook.net/{locale}/sdk.js',
+#         'SCOPE': ['email', 'public_profile'],
+#         'AUTH_PARAMS': {'auth_type': 'reauthenticate'},
+#     }}
+
+# LOGIN_URL = 'login'
+# LOGIN_REDIRECT_URL = ''
+# LOGOUT_URL = 'logout'
+# LOGOUT_REDIRECT_URL = 'login'
+
+
+# #for extra info
+# SOCIAL_AUTH_FACEBOOK_SCOPE = [
+#     'email',
+# ]
+
+# SOCIAL_AUTH_URL_NAMESPACE = 'social'
+
+# LOGIN_REDIRECT_URL ="/"

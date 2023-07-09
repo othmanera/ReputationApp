@@ -2,6 +2,7 @@
 
 
 {% block content %}
+
 <style>
  .section {
       display: flex;
@@ -58,14 +59,16 @@
                 <div class="select is-medium">
                   <select name="ModelSelection">
                     <option>Vader</option>
-                    <option>roBERTa</option>
+                    <option>roBERTa for tweets</option>
+                    <option>roBERTa arabic</option>
                   </select>
                 </div>
               </div>
             </div>
             <div class="field">
               <div class="buttons is-centered">
-                <button class="button is-medium submitB" type="submit">Search</button>
+                <button class="button is-medium" type="submit" name="submit_button" value="Analyze">Analyze</button>
+                <button class="button is-medium" type="submit" name="submit_button" value="Brand Reputation">Brand Reputation</button>
                 <button class="button is-medium ClearB" onclick="Clear()" type="reset">Clear</button>
               </form>
               </div>
@@ -83,14 +86,31 @@
         </div>
       </div>
     </div>
-  </section>
-
-
+    
   <script>
     function Clear() {
       document.getElementById('input').value = ''; 
       document.getElementById('output').value = ''; 
     }
   </script>
+
+  <section>
+  {%if ButtonValue %}
+  <div class="container">
+    <div class="field customfield">
+      <label class="label has-text-white">Charts</label>
+      <div class="control">
+        <form id="myForm"  method="post" action="{% url 'home' %}">
+          {% csrf_token %}
+        <input class="input is-medium" id="input" name="q" type="text" placeholder="Type your text here" {% if Post %} value="{{Q}}"{% endif %} >
+      </div>
+    </div>
+  </div>
+  
+  
+
+{%endif%}
 </body>
 {% endblock %}
+
+
