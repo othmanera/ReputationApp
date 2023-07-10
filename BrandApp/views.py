@@ -1,22 +1,9 @@
 from django.shortcuts import render
 from vaderSentiment.vaderSentiment import SentimentIntensityAnalyzer
-from transformers import BertTokenizer, BertForSequenceClassification , pipeline , AutoTokenizer
-import torch
+from transformers import pipeline , AutoTokenizer
 from camel_tools.sentiment import SentimentAnalyzer
-#BERT sentiment analysis function
-class BERTClassifier:
-    def __init__(self):
-        self.model_name = 'bert-base-uncased'
-        self.tokenizer = BertTokenizer.from_pretrained(self.model_name)
-        self.model = BertForSequenceClassification.from_pretrained(self.model_name)
-
-    def classify_text(self, text):
-        inputs = self.tokenizer(text, padding=True, truncation=True, return_tensors="pt")
-        outputs = self.model(**inputs)
-        logits = outputs.logits
-        predicted_labels = torch.argmax(logits, dim=1)
-        return predicted_labels.item()  
-
+import json
+from django.http import JsonResponse
 
 
 #VADER sentiment analysis function
@@ -53,6 +40,10 @@ def home(request):
     selected_value = None
     q = None
     ButtonValue = None
+    with open('E:\PFA\Interface\BrandReputation\BrandApp\src\output.json', encoding='utf-8') as file:
+        data = json.load(file)
+    comments = [item['Text'] for item in data]  # Extract 'text' field from each item
+    
 
     if request.method =='POST':
         q = request.POST.get('q', '')  # Get the value of the 'q' input field
@@ -70,18 +61,21 @@ def home(request):
         
         elif selected_value == "roBERTa arabic":
             sa = SentimentAnalyzer("CAMeL-Lab/bert-base-arabic-camelbert-da-sentiment")
-            sa.predict(q)
-
-        elif selected_value=="BERT":
-           sentiment_result= BERTClassifier().classify_text(q)
-    return render(request, 'home.html', {'sentiment_result': sentiment_result, "Radio":selected_value,"Q":q,"ButtonValue":ButtonValue})
+            sentiment_result=sa.predict(q)
+    return render(request, 'home.html', {'sentiment_result': sentiment_result, "Radio":selected_value,"Q":q,"ButtonValue":ButtonValue,'comments': comments})
 
 
 #login page
 def login(request):
     return render(request, 'login.html')
 
-# @login_required
-# def home(request):
-#     return render(request, 'home.html')
-   
+#Charts page 
+def charts(request):
+    return render(request, 'charts.html')
+
+#Data api to display on charts page
+def get_data(request, *args, **kwargs):
+    with open("E:\PFA\Interface\BrandReputation\BrandApp\src\output.json" ,encoding="utf-8") as file:
+        data = json.load(file)
+
+    return JsonResponse(data, safe=False)

@@ -12,7 +12,9 @@ urlpatterns = [
     path('login/', views.login, name='login'),
     # path('logout/', auth_views.LogoutView.as_view(), name='logout'),
     
-    
+     #API charts for data
+    path('api/data/', views.get_data, name='api-data'),
+    path('charts/', views.charts, name='charts'),    
 ]
 
 

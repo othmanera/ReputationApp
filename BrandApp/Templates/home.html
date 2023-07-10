@@ -4,12 +4,15 @@
 {% block content %}
 
 <style>
+  body{
+    background-color: #27374D;
+  }
  .section {
       display: flex;
       justify-content: center;
       align-items: center;
       height: 100vh;
-      background-color: #27374D;
+      
     }
 
     .custom-column {
@@ -36,7 +39,7 @@
       background-color: #DDE6ED;
     }
     .ClearB{
-      background-color: #ff7e7e;
+      background-color: #ff6868;
     }
   </style>
 </head>
@@ -87,6 +90,34 @@
       </div>
     </div>
     
+</section> 
+    
+<section>
+  <div class="bottom-div">
+    {%if ButtonValue %}
+<div class="container" id="comments">
+  <div class="field customfield">
+    <label class="label has-text-white">Comments</label>
+    <div class="control">
+      {% for comment in comments %} 
+      {% if forloop.counter <= 5 %}
+      <label class="label has-text-dark">{{comment}}</label>
+        <a target="blank" href="https://chat.openai.com/"> <button class="button is-small is-info" target="blank" href="https://chat.openai.com/"> Generate ChatGPT response</button> </a>
+        
+      {% endif %}
+    {% endfor %}
+    </div>
+    <div class="field">
+      <div class="buttons is-centered">
+       <a href="{% url 'charts' %}"> <button class="button is-medium">View charts</button> </a>
+      
+      </div>
+  </div>
+</div>
+
+</section>
+
+
   <script>
     function Clear() {
       document.getElementById('input').value = ''; 
@@ -94,18 +125,7 @@
     }
   </script>
 
-  <section>
-  {%if ButtonValue %}
-  <div class="container">
-    <div class="field customfield">
-      <label class="label has-text-white">Charts</label>
-      <div class="control">
-        <form id="myForm"  method="post" action="{% url 'home' %}">
-          {% csrf_token %}
-        <input class="input is-medium" id="input" name="q" type="text" placeholder="Type your text here" {% if Post %} value="{{Q}}"{% endif %} >
-      </div>
-    </div>
-  </div>
+ 
   
   
 
